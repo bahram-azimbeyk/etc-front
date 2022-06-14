@@ -1,0 +1,28 @@
+<core-navbar [_window]="_window"></core-navbar>
+<div class="bg-primary pb-5 text-white">
+  <div class="container">
+    <div style="min-height: 15vh"></div>
+    <div *ngIf="!catlist" class="justify-content-center d-flex">
+      <ng-lottie [options]="options" [styles]="styles" width="80vw">
+      </ng-lottie>
+    </div>
+    <div *ngIf="catlist" dir="rtl">
+      <p class="h2 text-right my-3 mr-2">دسته بندی مطالب:</p>
+      <mat-divider style="border-top-color: #6c757d"></mat-divider>
+      <div
+        *ngFor="let subcat of catlist.sub_categories"
+        dir="rtl "
+        style="text-align: right; background-color: rgba(255, 255, 255, 0.1)"
+        class="d-flex flex-column my-3 rounded p-3"
+      >
+        <p class="h4" *ngIf="subcat.categories">{{subcat.name}}</p>
+        <p class="d-flex flex-column">
+          <a *ngFor="let cat of subcat.categories" href="/bloglist/{{cat.name}}"
+            >{{cat.name}}</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<core-footer [_window]="_window"></core-footer>

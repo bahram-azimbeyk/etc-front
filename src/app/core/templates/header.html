@@ -1,0 +1,65 @@
+<div
+  *ngIf="!_header"
+  class="bg-{{_window.theme}}-bg"
+  style="min-height: 15vh"
+></div>
+<div
+  *ngIf="_header"
+  class="page-header mb-n1 overflow-hidden"
+  style="z-index: auto"
+  dir="{{ (_window.language==='fa-ir')?'rtl':'ltr' }}"
+  [style.textAlign]="_window.language=== 'fa-ir' ? 'left' : 'right'"
+  [style.fontFamily]="_window.language==='fa-ir' ? 'yekan-bakh-heavy' : 'inherit'"
+  class="bg-{{_window.theme}}"
+>
+  <div
+    class="page-header-image rellax-header"
+    data-rellax-speed="-8"
+    style="z-index: auto"
+    [style.backgroundImage]="'url(\'../../../assets/img/'+_header?.attrs.picture_filename +'\''"
+  >
+    <div *ngFor="let vector of _header?.components">
+      <img
+        src="../../../assets/shapes/{{vector.filename}}"
+        alt=""
+        class="position-absolute rotating--very-slow--rev"
+        style="top: {{vector.top}}; left: {{vector.left}}; height: {{vector.size}};"
+      />
+    </div>
+  </div>
+
+  <div class="container pt-5">
+    <div class="d-flex flex-column justify-content-center h-100">
+      <div style="max-height: 30%">
+        <ng-lottie
+          *ngIf="_header?.attrs.anim_filename"
+          [options]="options"
+          (animationCreated)="animationCreated($event)"
+        >
+        </ng-lottie>
+        <img
+          *ngIf="!_header?.attrs.anim_filename"
+          src="../../../assets/img/{{_header?.attrs.logo_filename }}"
+          style="height: 100%"
+        />
+      </div>
+      <div class="mt-5">
+        <p class="h2">{{ _header?.attrs.title }}</p>
+        <p class="h4">{{ _header?.attrs.motto }}</p>
+        <div
+          *ngIf="!mobileQuery.matches"
+          class="d-flex justify-content-center align-items-center"
+        >
+          <a
+            *ngFor="let btn of _header_btns"
+            class="btn btn-round bg-{{_window.theme}}-aux h5 mx-3"
+            style="z-index: 1"
+            href="{{btn.attrs.link }}"
+          >
+            {{ btn.attrs.title }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

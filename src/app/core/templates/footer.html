@@ -1,0 +1,80 @@
+<footer
+  class="pt-4 pt-md-5 border-top border-dark
+    bg-{{_window.theme}} text-white"
+  style="margin-bottom: 0.1px !important"
+  dir="{{ (_window.language==='fa-ir')?'rtl':'ltr' }}"
+  [style.textAlign]="_window.language=== 'fa-ir' ? 'right' : 'left'"
+  [style.fontFamily]="_window.language==='fa-ir' ? 'yekan-bakh-regular' : 'inherit'"
+>
+  <div class="container">
+    <div class="row" style="margin-right: 0px">
+      <ng-container *ngFor="let col of _footer?.components">
+        <div class="{{ col.attrs.grid }}">
+          <p class="h5">{{ col.attrs.title }}</p>
+          <ul class="list-unstyled text-small" style="padding: 0px">
+            <li *ngFor="let item of col.components">
+              <a
+                *ngIf="item.component_type === 'footer_picture'"
+                href="{{ item.attrs.url }}"
+                target="_blank"
+              >
+                <img
+                  class="mb-2 pb-1"
+                  src="../../../assets/img/{{
+                                        item.attrs.picture_filename
+                                    }}"
+                  style="width: {{ item.attrs.picture_width }}"
+                  alt="{{ item.attrs.title }}"
+                />
+              </a>
+              <a
+                *ngIf="item.component_type === 'footer_link'"
+                class="text-white"
+                href="{{ item.attrs.url }}"
+              >
+                {{ item.attrs.text }}
+              </a>
+              <p
+                *ngIf="item.component_type === 'footer_text'"
+                class="text-white"
+              >
+                <markdown ngPreserveWhitespaces>{{ item.attrs.text }}</markdown>
+              </p>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <nav
+    style="background-color: rgba(0, 0, 0, 0.2)"
+    class="nav text-white"
+    dr="ltr"
+  >
+    <div class="container text-center">
+      <div
+        class="d-flex align-items-center justify-content-between"
+        style="padding: 10px"
+      >
+        <div class="col-3">
+          <a
+            class="nav-link mt-1 text-{{_window.language === 'fa-ir'? 'right': 'left'}}"
+            style="color: rgb(209, 209, 209)"
+            >Designed by ETC Dev Group</a
+          >
+        </div>
+        <div class="col-3">
+          <a
+            href="https://trustseal.enamad.ir/?id=52951&code=jYZsHXDyzCWsFJK9lCT2"
+            target="_blank"
+          >
+            <img
+              src="../../../assets/img/namad.png"
+              style="height: 40px"
+              alt="E-namad"
+          /></a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</footer>

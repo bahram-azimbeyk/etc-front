@@ -1,0 +1,123 @@
+<nav
+  class="navbar navbar-expand-lg bg-{{
+        _window.theme
+    }} fixed-top navbar-transparent"
+  (scroll)="onWindowScroll()"
+  color-on-scroll="500"
+  dir="rtl"
+>
+  <div class="container">
+    <div class="dropdown button-dropdown">
+      <div ngbDropdown></div>
+    </div>
+
+    <div
+      class="collapse navbar-collapse"
+      [ngClass]="(sidebarVisible)?'bg-'+_window.theme+'-bg':''"
+      data-nav-image="assets/img/blurred-image-1.jpg"
+      data-color="green"
+    >
+      <ul
+        class="navbar-nav d-flex p-0"
+        [ngClass]="{'mr-auto':_navbar?.attrs.align_item==='Left','ml-auto':_navbar?.attrs.align_item==='Right','mx-auto':_navbar?.attrs.align_item==='Center'}"
+      >
+        <ng-container *ngFor="let item of _navbar?.components;let i = index">
+          <li
+            class="nav-item text-center"
+            *ngIf="item.attrs.item_type === 'link'"
+          >
+            <a
+              class="nav-link {{ item.attrs.style }}"
+              rel="tooltip"
+              title="{{ item.attrs.tooltip }}"
+              data-placement="bottom"
+              href="{{ item.attrs.url }}"
+            >
+              <p [ngClass]="item.attrs.is_minimized? 'd-lg-none d-xl-none': ''">
+                {{ item.attrs.text }}
+              </p>
+              <img
+                *ngIf="item.attrs.icon"
+                src="../../../assets/icons/{{ item.attrs.icon }}"
+                style="max-height: 20px"
+                class="mx-1"
+                alt=""
+              />
+            </a>
+          </li>
+          <li
+            *ngIf="item.attrs.item_type === 'dropdown'"
+            class="nav-item text-center"
+          >
+            <a
+              class="nav-link"
+              rel="tooltip"
+              title="{{ item.attrs.tooltip }}"
+              data-toggle="collapse"
+              attr.data-target="#collapse{{i}}"
+              aria-expanded="false"
+              attr.aria-controls="collapse{{i}}"
+              role="button"
+            >
+              <p>{{ item.attrs.text }}</p>
+              <img
+                *ngIf="item.attrs.icon"
+                class="mx-1"
+                src="../../../assets/icons/{{ item.attrs.icon }}"
+                style="max-height: 20px; margin-right: 5px"
+                alt=""
+              />
+            </a>
+            <div class="dropdown" id="collapse{{i}}">
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                  <a
+                    *ngFor="let element of item.components[0].components"
+                    class="text-justify text-right dropdown-item"
+                    href="{{ element.attrs.url }}"
+                    style="padding-right: 10px"
+                  >
+                    <img
+                      style="margin-right: 2px"
+                      src="../../../assets/icons/{{
+                                        element.attrs.icon
+                                    }}"
+                      alt=""
+                    />
+                    <p>{{ element.attrs.text }}</p></a
+                  >
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="navbar-translate">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarToggler"
+        aria-expanded="false"
+        (click)="sidebarToggle()"
+      >
+        <span class="navbar-toggler-bar bar1"></span>
+        <span class="navbar-toggler-bar bar2"></span>
+        <span class="navbar-toggler-bar bar3"></span>
+      </button>
+      <a
+        class="navbar-brand"
+        href="{{_navbar?.attrs.brand_link}}"
+        placement="bottom"
+      >
+        <p>{{ _navbar?.attrs.brand}}</p>
+        <img
+          src="../../../assets/img/now-logo.png"
+          style="max-height: 20px; margin-right: 5px"
+          alt=""
+        />
+      </a>
+    </div>
+  </div>
+</nav>

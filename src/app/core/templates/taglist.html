@@ -1,0 +1,47 @@
+<core-navbar [_window]="_window"></core-navbar>
+<div class="bg-primary pb-5 text-white">
+  <div class="container">
+    <div style="min-height: 15vh"></div>
+    <div *ngIf="!paperlist" class="justify-content-center d-flex">
+      <ng-lottie [options]="options" [styles]="styles" width="80vw">
+      </ng-lottie>
+    </div>
+    <div *ngIf="paperlist" dir="rtl">
+      <p class="h2 text-right my-3 mr-2">لیست مطالب مرتبط با {{tag}}:</p>
+      <mat-divider style="border-top-color: #6c757d"></mat-divider>
+      <div
+        *ngFor="let paper of paperlist"
+        dir="rtl "
+        style="text-align: right; background-color: rgba(255, 255, 255, 0.1)"
+        class="d-flex flex-column my-3 rounded p-3"
+      >
+        <div
+          style="height: 300px"
+          class="
+            overflow-hidden
+            d-flex
+            align-items-center
+            justify-content-center
+            rounded-lg
+          "
+        >
+          <a href="/blog/{{paper?.slug}}">
+            <img
+              src="{{mediaUrl+ paper?.banner}}"
+              alt=""
+              class="overflow-hidden"
+              href="/blog/{{paper?.slug}}"
+            />
+          </a>
+        </div>
+        <h1 class="my-3">
+          <a href="/blog/{{paper?.slug}}" class="text-white">
+            {{paper?.title}}
+          </a>
+        </h1>
+        <p class="mr-2" style="direction: rtl">{{paper?.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<core-footer [_window]="_window"></core-footer>

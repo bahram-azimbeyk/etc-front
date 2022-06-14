@@ -1,0 +1,39 @@
+<style>
+  .mat-expansion-panel-header-description {
+    color: white;
+  }
+  .mat-typography {
+    margin: 0 0 0px !important;
+  }
+</style>
+<div
+  class="container py-3"
+  dir="{{ (_window.language==='fa-ir')?'rtl':'ltr' }}"
+  [style.textAlign]="_window.language=== 'fa-ir' ? 'right' : 'right'"
+  [style.fontFamily]="_window.language==='fa-ir' ? 'yekan-bakh-regular ' : 'inherit' "
+>
+  <div *ngIf="_expansionbox.attrs.title" class="my-2">
+    <p class="text-white h2">{{_expansionbox.attrs.title}}</p>
+  </div>
+  <div>
+    <mat-accordion class="right-align bg-dark" style="text-align: right">
+      <mat-expansion-panel
+        *ngFor="let item of _expansionbox?.components"
+        style="background: rgba(0, 0, 0, 0.2)"
+        class="text-white"
+      >
+        <mat-expansion-panel-header
+          style="font-size: 1.2em; font-family: yekan-bakh-regular"
+        >
+          <p class="p-2 m-0">{{item.attrs.title}}</p>
+        </mat-expansion-panel-header>
+        <h1
+          class="m-3"
+          style="font-size: 1.1em; font-family: yekan-bakh-regular"
+        >
+          <markdown ngPreserveWhitelines> {{item.attrs.text}} </markdown>
+        </h1>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

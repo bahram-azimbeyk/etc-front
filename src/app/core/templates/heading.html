@@ -1,0 +1,114 @@
+<div
+  inViewport
+  [inViewportOptions]="{threshold:[0]}"
+  (inViewportAction)="onView($event)"
+  class="my-auto text-white"
+  dir="{{ (_window.language==='fa-ir')?'rtl':'ltr' }}"
+  [style.textAlign]="_window.language=== 'fa-ir' ? 'left' : 'right'"
+>
+  <div
+    *ngIf="_heading.attrs.title || _heading.attrs.text"
+    class="container text-center mb-4"
+  >
+    <div class="row text-{{_heading.attrs.align_text}} ">
+      <div class="col-12 my-1">
+        <p class="h2">
+          <markdown>{{ _heading.attrs.title }}</markdown>
+        </p>
+        <p class="h5 text-{{_heading.attrs.align_text}}">
+          <markdown>{{ _heading.attrs.text }}</markdown>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngFor="let section of _heading.components;let i=index"
+    class="p-4"
+    style=" min-height:{{section.attrs.min_height}} "
+  >
+    <div
+      class="my-auto d-flex flex-wrap"
+      [ngStyle]="(section.attrs.background_picture_filename)?{
+                'background-image': 'url(\'../assets/img/' + section.attrs.background_picture_filename + '\')',
+                'background-blend-mode':'color',
+                'background-size':'cover',
+                'color':'white'
+            }:{'color':'black'}"
+    >
+      <div class="container d-flex flex-wrap">
+        <div
+          *ngIf="section.attrs.picture_position!=='None'"
+          style="z-index: 1"
+          class="d-flex justify-content-center align-items-center"
+          [ngClass]="{
+            'section-picture-full':['Top','Bottom'].includes(section.attrs.picture_position),
+            'section-picture-half':['Left','Right'].includes(section.attrs.picture_position),
+            'order-0':['Top','Left','Right'].includes(section.attrs.picture_position),
+            'order-lg-2':['Right'].includes(section.attrs.picture_position),
+            'order-2':['Bottom'].includes(section.attrs.picture_position),
+            'text-center':true
+          }"
+        >
+          <ng-lottie
+            *ngIf="section?.attrs.anim_filename"
+            [options]="options[section.id]"
+          >
+          </ng-lottie>
+          <img
+            *ngIf="!section?.attrs.anim_filename"
+            src="../../../assets/img/{{ section.attrs.picture_filename }}"
+            style="max-height: 50vh"
+          />
+        </div>
+        <div
+          class="text-center order-1"
+          [ngClass]="
+                    ['None', 'Top', 'Bottom'].includes(section.attrs.picture_position)
+                        ? 'col-lg-12'
+                        : 'col-lg-6 col-12'
+                "
+        >
+          <div class="pt-2 pt-lg-5">
+            <div class="text-white d-flex">
+              <div style="z-index: 1">
+                <p
+                  class="h4 text-{{_window.language === 'fa-ir'? 'right': 'left'}}"
+                >
+                  {{ section.attrs.title }}
+                </p>
+                <p class="text-{{section.attrs.align_text}}">
+                  <markdown ngPreserveWhitelines>
+                    {{ section.attrs.text }}
+                  </markdown>
+                </p>
+                <a
+                  *ngIf="section.attrs.link!==''"
+                  class="btn btn-round btn-lg btn-link text-white  bg-{{_window.theme}}-aux"
+                  href="{{ section.attrs.link }}"
+                >
+                  {{ section.attrs.link_text }}
+                </a>
+              </div>
+            </div>
+            <img
+              src="../../../assets/shapes/{{section.attrs.text_shape}}"
+              class="position-absolute justify-content-center rotating--very-slow--norm"
+              width="1000px"
+              style="
+                top: 0;
+                left: 0;
+                display: block;
+                z-index: 0;
+
+                max-width: 40vw;
+
+                object-fit: cover;
+              "
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

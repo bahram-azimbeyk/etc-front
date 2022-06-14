@@ -1,0 +1,43 @@
+<div
+  class="overflow-auto container"
+  dir="{{ (_window.language==='fa-ir')?'rtl':'ltr' }}"
+  [style.textAlign]="_window.language=== 'fa-ir' ? 'left' : 'right'"
+  [style.fontFamily]="_window.language==='fa-ir' ? 'yekan-bakh-heavy' : 'inherit'"
+>
+  <div class="d-flex flex-nowrap">
+    <div
+      *ngFor=" let col of _cardbox?.components"
+      class="{{col.attrs.grid}} d-flex flex-column"
+    >
+      <div
+        *ngFor="let item of col.components"
+        class="p-4 rounded my-4 mx-auto d-flex flex-column justify-content-center"
+        [ngClass]="{
+          'col':col.attrs.orientation==='vertical',
+          'flex-sm-row':col.attrs.orientation==='horizontal'
+        }"
+        style="background-color: rgba(255, 255, 255, 0.5)"
+      >
+        <img
+          [ngClass]="{'mx-2 p-3':col.attrs.orientation!=='vertical'}"
+          class="col align-self-center"
+          style="max-height: 150px"
+          src="../../../assets/img/{{item.attrs.picture_filename1}}"
+          alt=""
+        />
+        <div class="d-flex flex-column mt-3">
+          <p class="text-center dropshadow h4">{{item.attrs.title}}</p>
+          <markdown ngPreserveWhitespaces class="text-justify">
+            {{item.attrs.text}}
+          </markdown>
+          <a
+            *ngIf="item.attrs.link"
+            href="{{item.attrs.link}}"
+            class="btn btn-primary mx-auto"
+            >{{item.attrs.link_text}}</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

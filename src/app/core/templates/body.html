@@ -1,0 +1,32 @@
+<div class="pb-1 bg-{{ _window.theme }}-bg">
+  <div *ngFor="let element of _body.components">
+    <core-expansionbox
+      *ngIf="element.component_type === 'expansion_box'"
+      [_window]="_window"
+      [_expansionbox]="element"
+    >
+    </core-expansionbox>
+    <core-video
+      *ngIf="element.component_type === 'video'"
+      [_window]="_window"
+      [_video]="element"
+    >
+    </core-video>
+    <core-heading
+      *ngIf="element.component_type === 'heading'"
+      [_window]="_window"
+      [_heading]="element"
+    ></core-heading>
+    <core-cardbox
+      *ngIf="element.component_type === 'cardbox'"
+      [_window]="_window"
+      [_cardbox]="element"
+    >
+    </core-cardbox>
+    <core-form
+      *ngIf="element.component_type === 'form'"
+      [_window]="_window"
+      [_form]="element"
+    ></core-form>
+  </div>
+</div>

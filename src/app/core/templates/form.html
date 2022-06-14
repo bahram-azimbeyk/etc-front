@@ -1,0 +1,92 @@
+<div
+  class="container form-wrapper text-center text-white p-5 my-5 rounded"
+  style="direction: rtl"
+>
+  <p class="h2">{{_form.attrs.title}}</p>
+  <p class="h5">{{_form.attrs.text}}</p>
+  <form
+    class="mt-5"
+    [formGroup]="formGroup"
+    (ngSubmit)="onSubmit()"
+    [ngClass]="{'was-validated':was_validated}"
+    novalidate
+  >
+    <div class="d-flex flex-wrap text-right">
+      <div
+        *ngFor="let input of _form.components"
+        class="{{input.attrs.grid}}"
+        [style.height]="input.attrs.input_type==='checkbox'?'50px':'100px'"
+      >
+        <label
+          [class.form-check-label]="input.attrs.input_type==='checkbox'"
+          [class.ml-3]="input.attrs.input_type==='checkbox'"
+          for="{{_form.name+input.name}}"
+          >{{input.attrs.label}}</label
+        >
+        <input
+          *ngIf="['email','password','text','number'].includes(input.attrs.input_type)"
+          id="{{_form.name + input.name}}"
+          type="{{input.attrs.input_type}}"
+          class="form-control"
+          placeholder="{{input.attrs.placeholder}}"
+          [class.is-invalid]=" (getControlErrors(input.name,'').length || formGroup.get(input.name).errors) && formGroup.get(input.name).touched"
+          formControlName="{{input.name}}"
+          required="{{input.attrs.required}}"
+        />
+        <textarea
+          *ngIf="['textarea'].includes(input.attrs.input_type)"
+          id="{{_form.name + input.name}}"
+          class="form-control"
+          placeholder="{{input.attrs.placeholder}}"
+          [class.is-invalid]="formGroup.get(input.name).errors && formGroup.get(input.name).touched"
+          formControlName="{{input.name}}"
+          required="{{input.attrs.required}}"
+        ></textarea>
+        <input
+          *ngIf="['checkbox'].includes(input.attrs.input_type)"
+          id="{{_form.name + input.name}}"
+          type="checkbox"
+          class="form-check-input"
+          [class.is-invalid]="formGroup.get(input.name).errors && formGroup.get(input.name).touched"
+          formControlName="{{input.name}}"
+          required="{{input.attrs.required}}"
+        />
+        <input
+          *ngIf="['file'].includes(input.attrs.input_type)"
+          name="{{input.name}}"
+          id="{{_form.name + input.name}}"
+          type="file"
+          class="form-control custom-file-control"
+          [class.is-invalid]="formGroup.get(input.name).errors && formGroup.get(input.name).touched"
+          formControlName="{{input.name}}"
+          required="{{input.attrs.required}}"
+          (change)="onFileChange($event, input.name)"
+        />
+        <select
+          *ngIf="['option'].includes(input.attrs.input_type)"
+          id="{{_form.name + input.name}}"
+          class="form-control"
+          formControlName="{{input.name}}"
+        >
+          <option *ngFor="let option of input.components">
+            {{option.attrs.value}}
+          </option>
+        </select>
+        <p
+          *ngFor="let error of getControlErrors(input.name, input.attrs.pattern_message)"
+          class="invalid-feedback my-1 h3"
+        >
+          {{error}}
+        </p>
+      </div>
+    </div>
+    <button
+      class="btn bg-{{_window.theme}}-aux btn-lg btn-round"
+      type="submit"
+      [class.spinner]="loading"
+      [disabled]="loading"
+    >
+      {{_form.attrs.submit_text}}
+    </button>
+  </form>
+</div>
